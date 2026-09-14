@@ -1,220 +1,61 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
-<title>直笛聲控闖關：B・A・G</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>直笛聲控闖關 B・A・G</title>
 <style>
-  :root{
-    --bg:#fffaf2;
-    --card:#ffffff;
-    --text:#2b2b2b;
-    --muted:#6f6f6f;
-    --good:#1f9d55;
-    --bad:#d64545;
-    --accent:#4f7cff;
-    --line:#e8e1d7;
-  }
-  *{box-sizing:border-box}
-  body{
-    margin:0;
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC",sans-serif;
-    background:var(--bg);
-    color:var(--text);
-    min-height:100vh;
-  }
-  .wrap{
-    max-width:980px;
-    margin:auto;
-    padding:18px;
-  }
-  .top{
-    display:flex;
-    gap:12px;
-    align-items:center;
-    justify-content:space-between;
-    flex-wrap:wrap;
-  }
-  h1{
-    margin:0;
-    font-size:clamp(24px,4vw,40px);
-  }
-  .pill{
-    background:#fff;
-    border:2px solid var(--line);
-    border-radius:999px;
-    padding:10px 14px;
-    font-weight:700;
-  }
-  .card{
-    background:var(--card);
-    border:2px solid var(--line);
-    border-radius:22px;
-    padding:18px;
-    margin-top:16px;
-    box-shadow:0 8px 24px rgba(0,0,0,.04);
-  }
-  .question{
-    text-align:center;
-    padding:18px 10px 8px;
-  }
-  .small{
-    color:var(--muted);
-    font-size:16px;
-  }
-  .target{
-    font-size:clamp(70px,18vw,150px);
-    font-weight:900;
-    line-height:1;
-    margin:10px 0 4px;
-    letter-spacing:.02em;
-  }
-  .solfege{
-    font-size:clamp(22px,5vw,34px);
-    font-weight:800;
-    color:var(--accent);
-  }
-  .status{
-    margin:16px auto 0;
-    max-width:620px;
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:10px;
-  }
-  .statusBox{
-    background:#fafafa;
-    border:1px solid #ececec;
-    border-radius:16px;
-    padding:12px;
-    text-align:center;
-  }
-  .bigVal{
-    font-size:28px;
-    font-weight:900;
-    margin-top:4px;
-  }
-  .track{
-    position:relative;
-    height:170px;
-    margin-top:8px;
-    overflow:hidden;
-    border-radius:18px;
-    background:
-      linear-gradient(#cfeeff 0 56%, #c7ecb4 56% 100%);
-    border:2px solid var(--line);
-  }
-  .road{
-    position:absolute;
-    left:0; right:0; bottom:24px;
-    height:18px;
-    background:#d7c19b;
-  }
-  .road:before{
-    content:"";
-    position:absolute;
-    left:0;right:0;top:7px;
-    border-top:3px dashed #fff8;
-  }
-  .player{
-    position:absolute;
-    left:3%;
-    bottom:38px;
-    font-size:56px;
-    transform:translateX(-50%);
-    transition:left .45s ease, transform .2s ease;
-    z-index:3;
-  }
-  .goal{
-    position:absolute;
-    right:2%;
-    bottom:39px;
-    font-size:54px;
-  }
-  .stepDots{
-    position:absolute;
-    left:5%;
-    right:8%;
-    bottom:17px;
-    display:flex;
-    justify-content:space-between;
-    z-index:2;
-  }
-  .dot{
-    width:12px;height:12px;border-radius:50%;
-    background:#8c6b42;
-    opacity:.35;
-  }
-  .dot.done{opacity:1; transform:scale(1.25);}
-  .controls{
-    display:flex;
-    gap:10px;
-    flex-wrap:wrap;
-    justify-content:center;
-    margin-top:16px;
-  }
-  button{
-    border:none;
-    border-radius:14px;
-    padding:14px 18px;
-    font-size:18px;
-    font-weight:800;
-    cursor:pointer;
-  }
-  #startBtn{background:var(--accent);color:#fff}
-  #nextBtn{background:#eef2ff;color:#3156c8}
-  #resetBtn{background:#f3f3f3;color:#444}
-  .message{
-    min-height:36px;
-    text-align:center;
-    margin-top:14px;
-    font-size:22px;
-    font-weight:900;
-  }
-  .good{color:var(--good)}
-  .bad{color:var(--bad)}
-  .hint{
-    margin-top:14px;
-    color:var(--muted);
-    font-size:14px;
-    line-height:1.6;
-  }
-  .settings{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:14px;
-    flex-wrap:wrap;
-    margin-top:10px;
-  }
-  label{font-weight:700}
-  input[type="range"]{width:180px}
-  @media (max-width:620px){
-    .status{grid-template-columns:1fr}
-    .track{height:150px}
-    .player,.goal{font-size:48px}
-  }
+:root{--bg:#fffaf2;--card:#fff;--text:#292929;--muted:#777;--good:#168a4a;--bad:#cf3f3f;--accent:#4f7cff;--line:#e7dfd5}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC",sans-serif;color:var(--text)}
+.wrap{max-width:900px;margin:auto;padding:16px}
+h1{font-size:clamp(26px,5vw,42px);margin:6px 0}
+.card{background:var(--card);border:2px solid var(--line);border-radius:22px;padding:18px;margin-top:14px;box-shadow:0 8px 24px rgba(0,0,0,.04)}
+.center{text-align:center}
+.target{font-size:clamp(88px,22vw,170px);font-weight:900;line-height:1;margin:10px 0}
+.sol{font-size:30px;font-weight:900;color:var(--accent)}
+.status{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:18px}
+.box{background:#fafafa;border:1px solid #eee;border-radius:15px;padding:12px;text-align:center}
+.label{font-size:14px;color:var(--muted)}
+.val{font-size:26px;font-weight:900;margin-top:4px}
+.meter{height:14px;background:#eee;border-radius:99px;overflow:hidden;margin-top:7px}
+.bar{height:100%;width:0%;background:#888;transition:width .08s linear}
+.track{position:relative;height:170px;border-radius:18px;overflow:hidden;background:linear-gradient(#cfedff 0 58%,#c9ebb7 58% 100%);border:2px solid var(--line)}
+.road{position:absolute;left:0;right:0;bottom:25px;height:18px;background:#d7c19b}
+.player{position:absolute;left:3%;bottom:40px;font-size:58px;transform:translateX(-50%);transition:left .4s ease}
+.goal{position:absolute;right:2%;bottom:40px;font-size:55px}
+.message{min-height:38px;text-align:center;font-size:22px;font-weight:900;margin-top:14px}
+.good{color:var(--good)} .bad{color:var(--bad)}
+.controls{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px}
+button{border:0;border-radius:14px;padding:14px 18px;font-size:18px;font-weight:900;cursor:pointer}
+#start{background:var(--accent);color:white}
+#next{background:#eef2ff;color:#3156c8}
+#reset{background:#f0f0f0;color:#444}
+.note{font-size:14px;line-height:1.65;color:var(--muted);margin-top:14px}
+@media(max-width:650px){.status{grid-template-columns:1fr}.track{height:150px}}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <div class="top">
-    <h1>🎵 直笛聲控闖關</h1>
-    <div class="pill">B・A・G</div>
-  </div>
+  <h1>🎵 直笛聲控闖關</h1>
 
-  <div class="card question">
-    <div class="small">請吹出這個音</div>
-    <div id="targetNote" class="target">B</div>
-    <div id="targetSolfege" class="solfege">Si</div>
+  <div class="card center">
+    <div class="label">請吹出這個音</div>
+    <div id="target" class="target">B</div>
+    <div id="sol" class="sol">Si</div>
 
     <div class="status">
-      <div class="statusBox">
-        <div class="small">麥克風聽到</div>
-        <div id="heardNote" class="bigVal">—</div>
+      <div class="box">
+        <div class="label">聽到的音</div>
+        <div id="heard" class="val">—</div>
       </div>
-      <div class="statusBox">
-        <div class="small">頻率</div>
-        <div id="freq" class="bigVal">— Hz</div>
+      <div class="box">
+        <div class="label">頻率</div>
+        <div id="freq" class="val">— Hz</div>
+      </div>
+      <div class="box">
+        <div class="label">麥克風音量</div>
+        <div class="meter"><div id="bar" class="bar"></div></div>
       </div>
     </div>
   </div>
@@ -224,276 +65,161 @@
       <div class="road"></div>
       <div id="player" class="player">🐰</div>
       <div class="goal">🏁</div>
-      <div id="stepDots" class="stepDots"></div>
     </div>
 
-    <div id="message" class="message">按「開始聽音」後吹奏</div>
+    <div id="msg" class="message">按「開始聽音」後吹奏</div>
 
     <div class="controls">
-      <button id="startBtn">🎤 開始聽音</button>
-      <button id="nextBtn">🎲 換一題</button>
-      <button id="resetBtn">↺ 重新開始</button>
+      <button id="start">🎤 開始聽音</button>
+      <button id="next">🎲 換一題</button>
+      <button id="reset">↺ 重新開始</button>
     </div>
 
-    <div class="settings">
-      <label for="hold">穩定吹奏時間</label>
-      <input id="hold" type="range" min="180" max="800" step="20" value="360">
-      <span id="holdVal">0.36 秒</span>
-    </div>
-
-    <div class="hint">
-      建議：一次由一位學生靠近裝置吹奏。第一次使用時，瀏覽器會詢問「允許麥克風」，請選允許。<br>
-      高音直笛此版本判斷 B4、A4、G4；系統會容許小幅音準誤差。
+    <div class="note">
+      高音直笛判定：G5 ≈ 784 Hz、A5 ≈ 880 Hz、B5 ≈ 988 Hz。<br>
+      若「麥克風音量」有跳動但音名沒有出現，請靠近 iPhone／iPad 一點吹；若音量完全不動，請檢查 Safari 的麥克風權限。
     </div>
   </div>
 </div>
 
 <script>
 (() => {
-  const NOTES = {
-    G: {freq:392.00, sol:"Sol"},
-    A: {freq:440.00, sol:"La"},
-    B: {freq:493.88, sol:"Si"}
+  const NOTES={
+    G:{freq:783.99,sol:"Sol"},
+    A:{freq:880.00,sol:"La"},
+    B:{freq:987.77,sol:"Si"}
   };
-  const noteOrder = ["B","A","G"];
-  const totalSteps = 10;
+  const ORDER=["B","A","G"];
+  const total=10;
 
-  let current = "B";
-  let step = 0;
-  let stream = null;
-  let audioCtx = null;
-  let analyser = null;
-  let source = null;
-  let raf = null;
-  let stableSince = 0;
-  let lastMatched = null;
-  let cooldownUntil = 0;
+  let current="B",step=0,stream=null,ctx=null,analyser=null,source=null,raf=null;
+  let stableStart=0,cooldown=0;
 
-  const $ = id => document.getElementById(id);
-  const targetNote = $("targetNote");
-  const targetSolfege = $("targetSolfege");
-  const heardNote = $("heardNote");
-  const freqEl = $("freq");
-  const player = $("player");
-  const msg = $("message");
-  const startBtn = $("startBtn");
-  const nextBtn = $("nextBtn");
-  const resetBtn = $("resetBtn");
-  const hold = $("hold");
-  const holdVal = $("holdVal");
-  const dots = $("stepDots");
+  const $=id=>document.getElementById(id);
+  const target=$("target"),sol=$("sol"),heard=$("heard"),freqEl=$("freq"),bar=$("bar");
+  const player=$("player"),msg=$("msg"),start=$("start"),next=$("next"),reset=$("reset");
 
-  function buildDots(){
-    dots.innerHTML = "";
-    for(let i=0;i<totalSteps;i++){
-      const d=document.createElement("div");
-      d.className="dot";
-      dots.appendChild(d);
+  function message(t,c=""){msg.textContent=t;msg.className="message "+c}
+  function choose(){
+    let n;
+    do{n=ORDER[Math.floor(Math.random()*ORDER.length)]}while(n===current);
+    current=n;target.textContent=n;sol.textContent=NOTES[n].sol;stableStart=0;
+  }
+  function updatePlayer(){ player.style.left=(3+(step/total)*84)+"%"; }
+  function noteFromFreq(f){
+    const midi=Math.round(69+12*Math.log2(f/440));
+    const names=["C","C♯","D","D♯","E","F","F♯","G","G♯","A","A♯","B"];
+    return {name:names[(midi%12+12)%12],oct:Math.floor(midi/12)-1,midi};
+  }
+  function cents(f,ref){return 1200*Math.log2(f/ref)}
+
+  function pitch(buf,sr){
+    let rms=0;
+    for(let i=0;i<buf.length;i++) rms+=buf[i]*buf[i];
+    rms=Math.sqrt(rms/buf.length);
+    if(rms<0.006) return {freq:-1,rms};
+
+    const minLag=Math.floor(sr/1400);
+    const maxLag=Math.min(Math.floor(sr/500),buf.length-2);
+    let bestLag=-1,best=0;
+
+    for(let lag=minLag;lag<=maxLag;lag++){
+      let sum=0,a2=0,b2=0;
+      for(let i=0;i<buf.length-lag;i++){
+        const a=buf[i],b=buf[i+lag];
+        sum+=a*b;a2+=a*a;b2+=b*b;
+      }
+      const corr=sum/Math.sqrt((a2*b2)||1);
+      if(corr>best){best=corr;bestLag=lag}
     }
-  }
-  buildDots();
-
-  function updateTrack(){
-    const pct = 3 + (step/totalSteps)*84;
-    player.style.left = pct + "%";
-    [...dots.children].forEach((d,i)=>d.classList.toggle("done", i<step));
+    if(bestLag<0 || best<0.55) return {freq:-1,rms};
+    return {freq:sr/bestLag,rms};
   }
 
-  function chooseQuestion(){
-    let next;
-    do{
-      next = noteOrder[Math.floor(Math.random()*noteOrder.length)];
-    }while(next===current && noteOrder.length>1);
-    current = next;
-    targetNote.textContent=current;
-    targetSolfege.textContent=NOTES[current].sol;
-    stableSince=0;
-    lastMatched=null;
-  }
-
-  function setMessage(text,type=""){
-    msg.textContent=text;
-    msg.className="message " + type;
-  }
-
-  hold.addEventListener("input",()=>{
-    holdVal.textContent=(Number(hold.value)/1000).toFixed(2)+" 秒";
-  });
-
-  nextBtn.addEventListener("click",()=>{
-    chooseQuestion();
-    setMessage("換題完成，請吹「"+current+"」");
-  });
-
-  resetBtn.addEventListener("click",()=>{
-    step=0;
-    updateTrack();
-    chooseQuestion();
-    setMessage("重新開始！");
-  });
-
-  startBtn.addEventListener("click", async ()=>{
-    if(stream){
-      stopMic();
-      return;
-    }
+  async function begin(){
     try{
-      stream = await navigator.mediaDevices.getUserMedia({
-        audio:{
-          echoCancellation:false,
-          noiseSuppression:false,
-          autoGainControl:false
-        }
+      stream=await navigator.mediaDevices.getUserMedia({
+        audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false}
       });
-      audioCtx = new (window.AudioContext||window.webkitAudioContext)();
-      analyser = audioCtx.createAnalyser();
-      analyser.fftSize = 2048;
-      source = audioCtx.createMediaStreamSource(stream);
+      ctx=new (window.AudioContext||window.webkitAudioContext)();
+      if(ctx.state==="suspended") await ctx.resume();
+      analyser=ctx.createAnalyser();
+      analyser.fftSize=4096;
+      source=ctx.createMediaStreamSource(stream);
       source.connect(analyser);
-      startBtn.textContent="⏹ 停止聽音";
-      setMessage("正在聽…請吹「"+current+"」");
-      listen();
-    }catch(err){
-      console.error(err);
-      setMessage("無法開啟麥克風，請檢查瀏覽器權限。","bad");
+      start.textContent="⏹ 停止聽音";
+      message("正在聽…請吹「"+current+"」");
+      loop();
+    }catch(e){
+      console.error(e);
+      message("麥克風沒有成功啟動，請檢查 Safari 權限。","bad");
     }
-  });
+  }
 
   function stopMic(){
     if(raf) cancelAnimationFrame(raf);
-    if(source) try{source.disconnect()}catch(e){}
     if(stream) stream.getTracks().forEach(t=>t.stop());
-    if(audioCtx) audioCtx.close();
-    stream=null; audioCtx=null; analyser=null; source=null; raf=null;
-    startBtn.textContent="🎤 開始聽音";
-    heardNote.textContent="—";
-    freqEl.textContent="— Hz";
-    setMessage("已停止聽音");
-  }
-
-  function autoCorrelate(buf, sampleRate){
-    let SIZE = buf.length;
-    let rms = 0;
-    for(let i=0;i<SIZE;i++) rms += buf[i]*buf[i];
-    rms = Math.sqrt(rms/SIZE);
-    if(rms < 0.02) return -1;
-
-    let r1=0, r2=SIZE-1, thres=0.2;
-    for(let i=0;i<SIZE/2;i++){
-      if(Math.abs(buf[i])<thres){ r1=i; break; }
-    }
-    for(let i=1;i<SIZE/2;i++){
-      if(Math.abs(buf[SIZE-i])<thres){ r2=SIZE-i; break; }
-    }
-
-    buf = buf.slice(r1,r2);
-    SIZE = buf.length;
-    const c = new Array(SIZE).fill(0);
-    for(let i=0;i<SIZE;i++){
-      for(let j=0;j<SIZE-i;j++){
-        c[i] += buf[j]*buf[j+i];
-      }
-    }
-
-    let d=0;
-    while(d+1<SIZE && c[d]>c[d+1]) d++;
-    let maxval=-1,maxpos=-1;
-    for(let i=d;i<SIZE;i++){
-      if(c[i]>maxval){maxval=c[i];maxpos=i;}
-    }
-    let T0=maxpos;
-    if(T0<=0) return -1;
-
-    const x1=c[T0-1]||c[T0], x2=c[T0], x3=c[T0+1]||c[T0];
-    const a=(x1+x3-2*x2)/2;
-    const b=(x3-x1)/2;
-    if(a) T0 = T0 - b/(2*a);
-    return sampleRate/T0;
-  }
-
-  function freqToMidi(f){
-    return Math.round(69 + 12*Math.log2(f/440));
-  }
-  function midiToName(m){
-    const names=["C","C♯","D","D♯","E","F","F♯","G","G♯","A","A♯","B"];
-    const name=names[(m%12+12)%12];
-    const oct=Math.floor(m/12)-1;
-    return {name, oct, full:name+oct};
-  }
-  function centsOff(freq, ref){
-    return 1200*Math.log2(freq/ref);
-  }
-
-  function listen(){
-    if(!analyser) return;
-    const buf = new Float32Array(analyser.fftSize);
-    analyser.getFloatTimeDomainData(buf);
-    const f = autoCorrelate(buf,audioCtx.sampleRate);
-    const now = performance.now();
-
-    if(f>80 && f<1200){
-      freqEl.textContent=f.toFixed(1)+" Hz";
-      const midi=freqToMidi(f);
-      const n=midiToName(midi);
-      heardNote.textContent=n.full;
-
-      // Compare directly to target recorder note.
-      const targetFreq=NOTES[current].freq;
-      const diff=Math.abs(centsOff(f,targetFreq));
-      const isCorrect = diff <= 50; // half-semitone-ish tolerance
-
-      if(now < cooldownUntil){
-        stableSince=0;
-        lastMatched=null;
-      }else if(isCorrect){
-        if(lastMatched!==current){
-          lastMatched=current;
-          stableSince=now;
-        } else if(now-stableSince >= Number(hold.value)){
-          success();
-          cooldownUntil=now+900;
-          stableSince=0;
-          lastMatched=null;
-        }
-      }else{
-        stableSince=0;
-        lastMatched=null;
-        if(["G","A","B"].includes(n.name)){
-          setMessage("聽到「"+n.name+"」，再試一次～","bad");
-        }else{
-          setMessage("目前不是 B、A、G，請再試一次～","bad");
-        }
-      }
-    }else{
-      heardNote.textContent="—";
-      freqEl.textContent="— Hz";
-      stableSince=0;
-      lastMatched=null;
-    }
-
-    raf=requestAnimationFrame(listen);
+    if(source) try{source.disconnect()}catch(e){}
+    if(ctx) ctx.close();
+    stream=ctx=analyser=source=raf=null;
+    start.textContent="🎤 開始聽音";
+    heard.textContent="—";freqEl.textContent="— Hz";bar.style.width="0%";
+    message("已停止聽音");
   }
 
   function success(){
     step++;
-    updateTrack();
-    setMessage("答對！🐰 前進一步！","good");
-    player.style.transform="translateX(-50%) scale(1.25)";
-    setTimeout(()=>player.style.transform="translateX(-50%) scale(1)",250);
-
-    if(step>=totalSteps){
-      setTimeout(()=>{
-        setMessage("🎉 抵達終點！過關！","good");
-      },250);
+    updatePlayer();
+    message("答對！🐰 前進一步！","good");
+    cooldown=performance.now()+900;
+    if(step>=total){
+      setTimeout(()=>message("🎉 抵達終點！過關！","good"),250);
     }else{
-      setTimeout(()=>{
-        chooseQuestion();
-        setMessage("下一題：請吹「"+current+"」");
-      },650);
+      setTimeout(()=>{choose();message("下一題：請吹「"+current+"」")},650);
     }
   }
 
-  updateTrack();
+  function loop(){
+    const data=new Float32Array(analyser.fftSize);
+    analyser.getFloatTimeDomainData(data);
+    const r=pitch(data,ctx.sampleRate);
+    const level=Math.min(100,r.rms*700);
+    bar.style.width=level+"%";
+
+    const now=performance.now();
+    if(r.freq>0){
+      freqEl.textContent=r.freq.toFixed(1)+" Hz";
+      const n=noteFromFreq(r.freq);
+      heard.textContent=n.name+n.oct;
+
+      const ok=Math.abs(cents(r.freq,NOTES[current].freq))<=55;
+      if(now<cooldown){
+        stableStart=0;
+      }else if(ok){
+        if(!stableStart) stableStart=now;
+        if(now-stableStart>300){
+          stableStart=0;
+          success();
+        }else{
+          message("抓到了！再穩一點…","good");
+        }
+      }else{
+        stableStart=0;
+        message("現在聽到「"+n.name+n.oct+"」，目標是 "+current+"5","bad");
+      }
+    }else{
+      freqEl.textContent="— Hz";
+      heard.textContent="—";
+      stableStart=0;
+      if(level>1) message("有收到聲音，正在判斷音高…");
+    }
+    raf=requestAnimationFrame(loop);
+  }
+
+  start.onclick=()=>stream?stopMic():begin();
+  next.onclick=()=>{choose();message("換題完成，請吹「"+current+"」")};
+  reset.onclick=()=>{step=0;updatePlayer();choose();message("重新開始！")};
+  updatePlayer();
 })();
 </script>
 </body>
