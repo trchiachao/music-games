@@ -1,225 +1,450 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>直笛聲控闖關 B・A・G</title>
+<title>直笛聲控闖關</title>
 <style>
-:root{--bg:#fffaf2;--card:#fff;--text:#292929;--muted:#777;--good:#168a4a;--bad:#cf3f3f;--accent:#4f7cff;--line:#e7dfd5}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC",sans-serif;color:var(--text)}
-.wrap{max-width:900px;margin:auto;padding:16px}
-h1{font-size:clamp(26px,5vw,42px);margin:6px 0}
-.card{background:var(--card);border:2px solid var(--line);border-radius:22px;padding:18px;margin-top:14px;box-shadow:0 8px 24px rgba(0,0,0,.04)}
-.center{text-align:center}
-.target{font-size:clamp(88px,22vw,170px);font-weight:900;line-height:1;margin:10px 0}
-.sol{font-size:30px;font-weight:900;color:var(--accent)}
-.status{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:18px}
-.box{background:#fafafa;border:1px solid #eee;border-radius:15px;padding:12px;text-align:center}
-.label{font-size:14px;color:var(--muted)}
-.val{font-size:26px;font-weight:900;margin-top:4px}
-.meter{height:14px;background:#eee;border-radius:99px;overflow:hidden;margin-top:7px}
-.bar{height:100%;width:0%;background:#888;transition:width .08s linear}
-.track{position:relative;height:170px;border-radius:18px;overflow:hidden;background:linear-gradient(#cfedff 0 58%,#c9ebb7 58% 100%);border:2px solid var(--line)}
-.road{position:absolute;left:0;right:0;bottom:25px;height:18px;background:#d7c19b}
-.player{position:absolute;left:3%;bottom:40px;font-size:58px;transform:translateX(-50%);transition:left .4s ease}
-.goal{position:absolute;right:2%;bottom:40px;font-size:55px}
-.message{min-height:38px;text-align:center;font-size:22px;font-weight:900;margin-top:14px}
-.good{color:var(--good)} .bad{color:var(--bad)}
-.controls{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px}
-button{border:0;border-radius:14px;padding:14px 18px;font-size:18px;font-weight:900;cursor:pointer}
-#start{background:var(--accent);color:white}
-#next{background:#eef2ff;color:#3156c8}
-#reset{background:#f0f0f0;color:#444}
-.note{font-size:14px;line-height:1.65;color:var(--muted);margin-top:14px}
-@media(max-width:650px){.status{grid-template-columns:1fr}.track{height:150px}}
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Noto Sans TC","Segoe UI",sans-serif;
+  background:linear-gradient(#bfeeff 0 67%,#b8e986 67%);
+  color:#402b1d;
+  min-height:100vh;
+}
+.game{max-width:1050px;margin:auto;padding:14px}
+.header{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.title{
+  font-size:clamp(26px,5vw,44px);
+  font-weight:950;
+  color:#13518c;
+  text-shadow:0 2px #fff;
+}
+.counter{
+  margin-left:auto;
+  background:#fff1ad;
+  border:4px solid white;
+  border-radius:30px;
+  padding:10px 18px;
+  font-size:clamp(18px,3vw,27px);
+  font-weight:900;
+}
+.track{
+  display:grid;
+  grid-template-columns:repeat(10,1fr);
+  gap:6px;
+  margin:28px 0 18px;
+}
+.cell{
+  min-width:0;
+  height:68px;
+  border:4px solid #805326;
+  background:#fff8e9;
+  border-radius:14px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:23px;
+  font-weight:900;
+  position:relative;
+}
+.cell.done{background:#ffe54e}
+.bear{
+  font-size:44px;
+  position:absolute;
+  top:-39px;
+  left:50%;
+  transform:translateX(-50%);
+}
+.panel{
+  background:#fffefa;
+  border:6px solid #55b8ef;
+  border-radius:32px;
+  padding:18px;
+  text-align:center;
+}
+.prompt{
+  display:inline-block;
+  background:#178bdd;
+  color:white;
+  border-radius:30px;
+  padding:9px 30px;
+  font-size:clamp(22px,4vw,34px);
+  font-weight:900;
+}
+.musicnote{
+  font-size:82px;
+  line-height:1;
+  margin:14px 0 4px;
+  color:#23160f;
+}
+.question-wrap{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:225px;
+}
+.question{
+  width:min(250px,65vw);
+  min-height:210px;
+  border-radius:30px;
+  border:6px solid #f14f78;
+  background:#ffdce4;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:66px;
+  font-weight:950;
+  writing-mode:vertical-rl;
+  text-orientation:upright;
+  letter-spacing:8px;
+}
+.message{
+  min-height:34px;
+  margin-top:8px;
+  font-size:21px;
+  font-weight:900;
+}
+.good{color:#15924d}.bad{color:#c94141}
+.status{
+  margin-top:14px;
+  background:white;
+  border:4px solid #72c9ee;
+  border-radius:24px;
+  padding:12px;
+  display:grid;
+  grid-template-columns:auto 1fr auto auto;
+  gap:12px;
+  align-items:center;
+  font-size:18px;
+  font-weight:850;
+}
+.meter{
+  height:22px;
+  background:#e5e8e8;
+  border-radius:999px;
+  overflow:hidden;
+}
+.bar{
+  height:100%;
+  width:0;
+  background:#20c46b;
+  transition:width .08s linear;
+}
+.heard{
+  min-width:90px;
+  background:#fff8e9;
+  border-radius:12px;
+  padding:8px 12px;
+  text-align:center;
+}
+.controls{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:12px;
+}
+button{
+  border:0;
+  border-radius:15px;
+  padding:13px 20px;
+  min-height:48px;
+  font-size:18px;
+  font-weight:900;
+  cursor:pointer;
+}
+.start{background:#187fd0;color:white}
+.reset{background:white;color:#555}
+@media(max-width:650px){
+  .counter{margin-left:0}
+  .track{gap:3px;margin-top:25px}
+  .cell{height:50px;font-size:15px;border-width:3px;border-radius:10px}
+  .bear{font-size:31px;top:-29px}
+  .panel{padding:12px;border-width:4px}
+  .musicnote{font-size:65px}
+  .question-wrap{min-height:185px}
+  .question{width:170px;min-height:175px;font-size:51px;border-width:4px}
+  .status{grid-template-columns:auto 1fr;font-size:16px}
+  .heard{grid-column:2}
+}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <h1>🎵 直笛聲控闖關</h1>
-
-  <div class="card center">
-    <div class="label">請吹出這個音</div>
-    <div id="target" class="target">B</div>
-    <div id="sol" class="sol">Si</div>
-
-    <div class="status">
-      <div class="box">
-        <div class="label">聽到的音</div>
-        <div id="heard" class="val">—</div>
-      </div>
-      <div class="box">
-        <div class="label">頻率</div>
-        <div id="freq" class="val">— Hz</div>
-      </div>
-      <div class="box">
-        <div class="label">麥克風音量</div>
-        <div class="meter"><div id="bar" class="bar"></div></div>
-      </div>
-    </div>
+<div class="game">
+  <div class="header">
+    <div class="title">🎵 直笛聲控闖關</div>
+    <div id="counter" class="counter">第 1 / 10 題</div>
   </div>
 
-  <div class="card">
-    <div class="track">
-      <div class="road"></div>
-      <div id="player" class="player">🐰</div>
-      <div class="goal">🏁</div>
+  <div id="track" class="track"></div>
+
+  <div class="panel">
+    <div class="prompt">請吹出這個音</div>
+    <div class="musicnote">♩</div>
+
+    <div class="question-wrap">
+      <div id="question" class="question">ㄙㄛ</div>
     </div>
 
-    <div id="msg" class="message">按「開始聽音」後吹奏</div>
+    <div id="message" class="message">按「開始聽音」後吹奏</div>
+  </div>
 
-    <div class="controls">
-      <button id="start">🎤 開始聽音</button>
-      <button id="next">🎲 換一題</button>
-      <button id="reset">↺ 重新開始</button>
-    </div>
+  <div class="status">
+    <div>🎤 麥克風音量</div>
+    <div class="meter"><div id="bar" class="bar"></div></div>
+    <div>聽到的音：</div>
+    <div id="heard" class="heard">---</div>
+  </div>
 
-    <div class="note">
-      高音直笛判定：G5 ≈ 784 Hz、A5 ≈ 880 Hz、B5 ≈ 988 Hz。<br>
-      若「麥克風音量」有跳動但音名沒有出現，請靠近 iPhone／iPad 一點吹；若音量完全不動，請檢查 Safari 的麥克風權限。
-    </div>
+  <div class="controls">
+    <button id="start" class="start" type="button">🎤 開始聽音</button>
+    <button id="reset" class="reset" type="button">↺ 重新開始</button>
   </div>
 </div>
 
 <script>
 (() => {
-  const NOTES={
-    G:{freq:783.99,sol:"Sol"},
-    A:{freq:880.00,sol:"La"},
-    B:{freq:987.77,sol:"Si"}
-  };
-  const ORDER=["B","A","G"];
-  const total=10;
+  const NOTES = [
+    { label: "ㄙㄛ", freq: 783.99 }, // G5
+    { label: "ㄌㄚ", freq: 880.00 }, // A5
+    { label: "ㄒㄧ", freq: 987.77 }  // B5
+  ];
 
-  let current="B",step=0,stream=null,ctx=null,analyser=null,source=null,raf=null;
-  let stableStart=0,cooldown=0;
+  const total = 10;
+  let questionIndex = 0;
+  let current = null;
+  let previousLabel = null;
 
-  const $=id=>document.getElementById(id);
-  const target=$("target"),sol=$("sol"),heard=$("heard"),freqEl=$("freq"),bar=$("bar");
-  const player=$("player"),msg=$("msg"),start=$("start"),next=$("next"),reset=$("reset");
+  let stream = null;
+  let audioContext = null;
+  let analyser = null;
+  let source = null;
+  let animationFrame = null;
+  let stableSince = 0;
+  let cooldownUntil = 0;
 
-  function message(t,c=""){msg.textContent=t;msg.className="message "+c}
-  function choose(){
-    let n;
-    do{n=ORDER[Math.floor(Math.random()*ORDER.length)]}while(n===current);
-    current=n;target.textContent=n;sol.textContent=NOTES[n].sol;stableStart=0;
-  }
-  function updatePlayer(){ player.style.left=(3+(step/total)*84)+"%"; }
-  function noteFromFreq(f){
-    const midi=Math.round(69+12*Math.log2(f/440));
-    const names=["C","C♯","D","D♯","E","F","F♯","G","G♯","A","A♯","B"];
-    return {name:names[(midi%12+12)%12],oct:Math.floor(midi/12)-1,midi};
-  }
-  function cents(f,ref){return 1200*Math.log2(f/ref)}
+  const track = document.getElementById("track");
+  const counter = document.getElementById("counter");
+  const question = document.getElementById("question");
+  const message = document.getElementById("message");
+  const bar = document.getElementById("bar");
+  const heard = document.getElementById("heard");
+  const startButton = document.getElementById("start");
+  const resetButton = document.getElementById("reset");
 
-  function pitch(buf,sr){
-    let rms=0;
-    for(let i=0;i<buf.length;i++) rms+=buf[i]*buf[i];
-    rms=Math.sqrt(rms/buf.length);
-    if(rms<0.006) return {freq:-1,rms};
+  function renderTrack() {
+    track.innerHTML = "";
+    for (let i = 0; i < total; i++) {
+      const cell = document.createElement("div");
+      cell.className = "cell" + (i < questionIndex ? " done" : "");
+      cell.textContent = i + 1;
 
-    const minLag=Math.floor(sr/1400);
-    const maxLag=Math.min(Math.floor(sr/500),buf.length-2);
-    let bestLag=-1,best=0;
-
-    for(let lag=minLag;lag<=maxLag;lag++){
-      let sum=0,a2=0,b2=0;
-      for(let i=0;i<buf.length-lag;i++){
-        const a=buf[i],b=buf[i+lag];
-        sum+=a*b;a2+=a*a;b2+=b*b;
+      if (i === Math.min(questionIndex, total - 1)) {
+        const bear = document.createElement("span");
+        bear.className = "bear";
+        bear.textContent = "🐻";
+        cell.appendChild(bear);
       }
-      const corr=sum/Math.sqrt((a2*b2)||1);
-      if(corr>best){best=corr;bestLag=lag}
+      track.appendChild(cell);
     }
-    if(bestLag<0 || best<0.55) return {freq:-1,rms};
-    return {freq:sr/bestLag,rms};
+    counter.textContent = `第 ${Math.min(questionIndex + 1, total)} / ${total} 題`;
   }
 
-  async function begin(){
-    try{
-      stream=await navigator.mediaDevices.getUserMedia({
-        audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false}
-      });
-      ctx=new (window.AudioContext||window.webkitAudioContext)();
-      if(ctx.state==="suspended") await ctx.resume();
-      analyser=ctx.createAnalyser();
-      analyser.fftSize=4096;
-      source=ctx.createMediaStreamSource(stream);
-      source.connect(analyser);
-      start.textContent="⏹ 停止聽音";
-      message("正在聽…請吹「"+current+"」");
-      loop();
-    }catch(e){
-      console.error(e);
-      message("麥克風沒有成功啟動，請檢查 Safari 權限。","bad");
+  function chooseQuestion() {
+    let next;
+    do {
+      next = NOTES[Math.floor(Math.random() * NOTES.length)];
+    } while (NOTES.length > 1 && next.label === previousLabel);
+
+    current = next;
+    previousLabel = next.label;
+    question.textContent = current.label;
+    stableSince = 0;
+    message.textContent = `請吹「${current.label}」`;
+    message.className = "message";
+  }
+
+  function centsDifference(freq, reference) {
+    return 1200 * Math.log2(freq / reference);
+  }
+
+  function closestNote(freq) {
+    let best = NOTES[0];
+    for (const n of NOTES) {
+      if (Math.abs(centsDifference(freq, n.freq)) <
+          Math.abs(centsDifference(freq, best.freq))) {
+        best = n;
+      }
     }
+    return best;
   }
 
-  function stopMic(){
-    if(raf) cancelAnimationFrame(raf);
-    if(stream) stream.getTracks().forEach(t=>t.stop());
-    if(source) try{source.disconnect()}catch(e){}
-    if(ctx) ctx.close();
-    stream=ctx=analyser=source=raf=null;
-    start.textContent="🎤 開始聽音";
-    heard.textContent="—";freqEl.textContent="— Hz";bar.style.width="0%";
-    message("已停止聽音");
-  }
+  function detectPitch(buffer, sampleRate) {
+    let rms = 0;
+    for (const value of buffer) rms += value * value;
+    rms = Math.sqrt(rms / buffer.length);
 
-  function success(){
-    step++;
-    updatePlayer();
-    message("答對！🐰 前進一步！","good");
-    cooldown=performance.now()+900;
-    if(step>=total){
-      setTimeout(()=>message("🎉 抵達終點！過關！","good"),250);
-    }else{
-      setTimeout(()=>{choose();message("下一題：請吹「"+current+"」")},650);
+    if (rms < 0.006) return { freq: -1, rms };
+
+    const minLag = Math.floor(sampleRate / 1400);
+    const maxLag = Math.min(Math.floor(sampleRate / 500), buffer.length - 2);
+
+    let bestLag = -1;
+    let bestCorrelation = 0;
+
+    for (let lag = minLag; lag <= maxLag; lag++) {
+      let sum = 0, a2 = 0, b2 = 0;
+
+      for (let i = 0; i < buffer.length - lag; i++) {
+        const a = buffer[i];
+        const b = buffer[i + lag];
+        sum += a * b;
+        a2 += a * a;
+        b2 += b * b;
+      }
+
+      const correlation = sum / Math.sqrt((a2 * b2) || 1);
+      if (correlation > bestCorrelation) {
+        bestCorrelation = correlation;
+        bestLag = lag;
+      }
     }
+
+    if (bestLag <= 0 || bestCorrelation < 0.55) {
+      return { freq: -1, rms };
+    }
+
+    return { freq: sampleRate / bestLag, rms };
   }
 
-  function loop(){
-    const data=new Float32Array(analyser.fftSize);
-    analyser.getFloatTimeDomainData(data);
-    const r=pitch(data,ctx.sampleRate);
-    const level=Math.min(100,r.rms*700);
-    bar.style.width=level+"%";
-
-    const now=performance.now();
-    if(r.freq>0){
-      freqEl.textContent=r.freq.toFixed(1)+" Hz";
-      const n=noteFromFreq(r.freq);
-      heard.textContent=n.name+n.oct;
-
-      const ok=Math.abs(cents(r.freq,NOTES[current].freq))<=55;
-      if(now<cooldown){
-        stableStart=0;
-      }else if(ok){
-        if(!stableStart) stableStart=now;
-        if(now-stableStart>300){
-          stableStart=0;
-          success();
-        }else{
-          message("抓到了！再穩一點…","good");
+  async function startListening() {
+    try {
+      stream = await navigator.mediaDevices.getUserMedia({
+        audio: {
+          echoCancellation: false,
+          noiseSuppression: false,
+          autoGainControl: false
         }
-      }else{
-        stableStart=0;
-        message("現在聽到「"+n.name+n.oct+"」，目標是 "+current+"5","bad");
+      });
+
+      audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      if (audioContext.state === "suspended") {
+        await audioContext.resume();
       }
-    }else{
-      freqEl.textContent="— Hz";
-      heard.textContent="—";
-      stableStart=0;
-      if(level>1) message("有收到聲音，正在判斷音高…");
+
+      analyser = audioContext.createAnalyser();
+      analyser.fftSize = 4096;
+
+      source = audioContext.createMediaStreamSource(stream);
+      source.connect(analyser);
+
+      startButton.textContent = "⏹ 停止聽音";
+      message.textContent = `正在聽…請吹「${current.label}」`;
+      listenLoop();
+    } catch (error) {
+      message.textContent = "無法啟動麥克風，請檢查 Safari 的麥克風權限";
+      message.className = "message bad";
     }
-    raf=requestAnimationFrame(loop);
   }
 
-  start.onclick=()=>stream?stopMic():begin();
-  next.onclick=()=>{choose();message("換題完成，請吹「"+current+"」")};
-  reset.onclick=()=>{step=0;updatePlayer();choose();message("重新開始！")};
-  updatePlayer();
+  function stopListening() {
+    if (animationFrame) cancelAnimationFrame(animationFrame);
+    if (stream) stream.getTracks().forEach(track => track.stop());
+    if (source) {
+      try { source.disconnect(); } catch (e) {}
+    }
+    if (audioContext) audioContext.close();
+
+    stream = null;
+    audioContext = null;
+    analyser = null;
+    source = null;
+    animationFrame = null;
+
+    startButton.textContent = "🎤 開始聽音";
+    bar.style.width = "0%";
+    heard.textContent = "---";
+  }
+
+  function success() {
+    questionIndex++;
+    renderTrack();
+
+    message.textContent = "答對！小熊前進一格！";
+    message.className = "message good";
+    cooldownUntil = performance.now() + 900;
+
+    if (questionIndex >= total) {
+      counter.textContent = "10 / 10 完成！";
+      message.textContent = "🎉 十題完成！過關！";
+      stopListening();
+      return;
+    }
+
+    setTimeout(chooseQuestion, 650);
+  }
+
+  function listenLoop() {
+    const data = new Float32Array(analyser.fftSize);
+    analyser.getFloatTimeDomainData(data);
+
+    const result = detectPitch(data, audioContext.sampleRate);
+    const volume = Math.min(100, result.rms * 700);
+    bar.style.width = volume + "%";
+
+    const now = performance.now();
+
+    if (result.freq > 0) {
+      const note = closestNote(result.freq);
+      heard.textContent = note.label;
+
+      const correct =
+        Math.abs(centsDifference(result.freq, current.freq)) <= 55;
+
+      if (now < cooldownUntil) {
+        stableSince = 0;
+      } else if (correct) {
+        if (!stableSince) stableSince = now;
+
+        if (now - stableSince >= 300) {
+          stableSince = 0;
+          success();
+        } else {
+          message.textContent = "抓到了，再穩一點…";
+          message.className = "message good";
+        }
+      } else {
+        stableSince = 0;
+        message.textContent = `聽到「${note.label}」，再試一次`;
+        message.className = "message bad";
+      }
+    } else {
+      heard.textContent = "---";
+      stableSince = 0;
+    }
+
+    animationFrame = requestAnimationFrame(listenLoop);
+  }
+
+  startButton.addEventListener("click", () => {
+    if (stream) stopListening();
+    else startListening();
+  });
+
+  resetButton.addEventListener("click", () => {
+    questionIndex = 0;
+    previousLabel = null;
+    cooldownUntil = 0;
+    renderTrack();
+    chooseQuestion();
+    message.textContent = "重新開始！";
+    message.className = "message";
+  });
+
+  renderTrack();
+  chooseQuestion();
 })();
 </script>
 </body>
