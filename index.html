@@ -2,160 +2,54 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>直笛聲控闖關</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>佳釗老師的音樂遊戲樂園</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Noto Sans TC","Segoe UI",sans-serif;background:linear-gradient(#c9f0ff 0 68%,#c8eca1 68%);color:#3c2b20;min-height:100vh}
-.game{max-width:1050px;margin:auto;padding:14px}.header{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-.title{font-size:clamp(27px,5vw,45px);font-weight:950;color:#15568e;text-shadow:0 2px white}
-.counter{margin-left:auto;background:#fff1a8;border:4px solid white;border-radius:28px;padding:9px 17px;font-size:clamp(17px,3vw,26px);font-weight:900}
-.card{background:#fffefa;border:5px solid #64bce9;border-radius:28px;padding:16px;margin-top:13px}
-.setupTitle{text-align:center;font-size:28px;font-weight:950;color:#15568e}.help{text-align:center;color:#66564b;margin:6px 0 15px;font-weight:700}
-.notes{display:grid;grid-template-columns:repeat(9,1fr);gap:8px}.choice{position:relative}.choice input{position:absolute;opacity:0}
-.choice label{min-height:112px;border:4px solid #cec7bd;border-radius:18px;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;font-weight:900;cursor:pointer}
-.choice input:checked+label{background:#fff0a8;border-color:#eea828;transform:translateY(-2px)}
-.zh{font-size:30px;writing-mode:vertical-rl;text-orientation:upright;letter-spacing:2px}.oct{font-size:13px;color:#766b63}
-.buttons,.controls{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:14px}
-button{border:0;border-radius:15px;padding:13px 19px;min-height:48px;font-size:17px;font-weight:900;cursor:pointer}
-.all{background:#fff1a8;color:#72510c}.clear{background:#eee;color:#555}.go,.start{background:#187fd0;color:#fff}.reset{background:#fff;color:#555}
-.track{display:grid;grid-template-columns:repeat(10,1fr);gap:6px;margin:34px 0 16px}
-.cell{height:65px;border:4px solid #805326;background:#fff8e9;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;position:relative}
-.cell.done{background:#ffe54e}.bear{position:absolute;top:-48px;left:50%;transform:translateX(-50%);font-size:52px;filter:drop-shadow(0 2px 1px #fff)}
-.playCard{text-align:center}.prompt{display:inline-block;background:#178bdd;color:white;border-radius:30px;padding:8px 28px;font-size:clamp(21px,4vw,32px);font-weight:900}
-.questionBox{margin:18px auto 8px;width:min(240px,70vw);min-height:220px;border-radius:28px;border:6px solid #f15c80;background:#ffe0e7;display:flex;flex-direction:column;align-items:center;justify-content:center}
-.question{font-size:62px;font-weight:950;writing-mode:vertical-rl;text-orientation:upright;letter-spacing:5px}.highMark{font-size:17px;font-weight:900;color:#c53e62;margin-bottom:7px}
-.message{min-height:34px;font-size:21px;font-weight:900}.good{color:#15924d}.bad{color:#c94141}
-.status{margin-top:14px;background:#fff;border:4px solid #72c9ee;border-radius:22px;padding:12px;display:grid;grid-template-columns:auto 1fr auto auto;gap:12px;align-items:center;font-size:17px;font-weight:850}
-.meter{height:21px;background:#e4e8e8;border-radius:999px;overflow:hidden}.bar{height:100%;width:0;background:#20c46b}.heard{min-width:105px;background:#fff8e9;border-radius:12px;padding:8px;text-align:center}.hidden{display:none!important}
-@media(max-width:700px){.notes{grid-template-columns:repeat(3,1fr)}.choice label{min-height:95px}.counter{margin-left:0}.track{gap:3px}.cell{height:48px;font-size:14px;border-width:3px;border-radius:9px}.bear{font-size:35px;top:-34px}.status{grid-template-columns:auto 1fr}.heard{grid-column:2}.questionBox{min-height:185px}.question{font-size:52px}}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Noto Sans TC","Segoe UI",sans-serif;color:#344054;background:linear-gradient(180deg,#d9f4ff 0,#f7fcff 46%,#eff9df 100%);min-height:100vh}
+.wrap{max-width:1050px;margin:auto;padding:42px 20px 60px}
+.hero{text-align:center;margin-bottom:34px}.music{font-size:48px}
+h1{margin:5px 0 8px;font-size:clamp(32px,6vw,54px);color:#155b91}
+.subtitle{font-size:clamp(17px,2.5vw,22px);font-weight:700;color:#627384}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:22px}
+.game{display:block;text-decoration:none;color:inherit;background:white;border:4px solid #8bd0ef;border-radius:28px;padding:25px;text-align:center;box-shadow:0 8px 0 rgba(72,137,171,.12);transition:.18s}
+.game:hover{transform:translateY(-4px)}
+.icon{font-size:66px;margin-bottom:10px}.game h2{margin:4px 0 8px;color:#155b91;font-size:25px}
+.game p{margin:0 0 18px;line-height:1.65;font-weight:650;color:#65727d}
+.play{display:inline-block;background:#1889d8;color:white;border-radius:999px;padding:11px 22px;font-size:17px;font-weight:900}
+.soon{border-color:#d8dde2;opacity:.72}.soon .play{background:#aab2ba}
+.footer{text-align:center;margin-top:35px;color:#75828d;font-size:14px}
+@media(max-width:600px){.wrap{padding-top:25px}.hero{margin-bottom:24px}.grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<div class="game">
-<div class="header"><div class="title">🎵 直笛聲控闖關</div><div id="counter" class="counter hidden">第 1 / 10 題</div></div>
-
-<section id="setup" class="card">
- <div class="setupTitle">這次要挑戰哪些音？</div>
- <div class="help">全部挑戰，或只選今天要練習的幾個音。</div>
- <div id="notes" class="notes"></div>
- <div class="buttons">
-  <button id="selectAll" class="all" type="button">✓ 全部音</button>
-  <button id="clear" class="clear" type="button">清除選擇</button>
-  <button id="go" class="go" type="button">🐻 開始 10 題挑戰</button>
- </div>
- <div id="setupMsg" class="message"></div>
+<main class="wrap">
+<section class="hero">
+<div class="music">🎵</div>
+<h1>佳釗老師的音樂遊戲樂園</h1>
+<div class="subtitle">選一個遊戲，開始今天的音樂挑戰吧！</div>
 </section>
-
-<section id="play" class="hidden">
- <div id="track" class="track"></div>
- <div class="card playCard">
-  <div class="prompt">請吹出這個音</div>
-  <div class="questionBox"><div id="highMark" class="highMark"></div><div id="question" class="question">ㄙㄛ</div></div>
-  <div id="message" class="message">按「開始聽音」後吹奏</div>
- </div>
- <div class="status">
-  <div>🎤 麥克風音量</div><div class="meter"><div id="bar" class="bar"></div></div>
-  <div>聽到的音：</div><div id="heard" class="heard">---</div>
- </div>
- <div class="controls">
-  <button id="start" class="start" type="button">🎤 開始聽音</button>
-  <button id="change" class="all" type="button">🎼 重新選音</button>
-  <button id="reset" class="reset" type="button">↺ 重玩這組</button>
- </div>
-</section>
+<section class="grid">
+<a class="game" href="./recorder/">
+<div class="icon">🪈🐻</div>
+<h2>直笛聲控闖關</h2>
+<p>選擇今天要練習的音，吹對音高，小熊就會往前走！</p>
+<span class="play">開始遊戲 ▶</span>
+</a>
+<div class="game soon">
+<div class="icon">🎼</div>
+<h2>五線譜挑戰</h2>
+<p>認識五線譜的線與間，訓練快速反應。</p>
+<span class="play">即將加入</span>
 </div>
-
-<script>
-(()=>{
-const ALL=[
-{id:"C5",label:"ㄉㄛ",freq:523.25,high:false},
-{id:"D5",label:"ㄖㄨㄝ",freq:587.33,high:false},
-{id:"E5",label:"ㄇㄧ",freq:659.25,high:false},
-{id:"F5",label:"ㄈㄚ",freq:698.46,high:false},
-{id:"G5",label:"ㄙㄛ",freq:783.99,high:false},
-{id:"A5",label:"ㄌㄚ",freq:880.00,high:false},
-{id:"B5",label:"ㄒㄧ",freq:987.77,high:false},
-{id:"C6",label:"ㄉㄛ",freq:1046.50,high:true},
-{id:"D6",label:"ㄖㄨㄝ",freq:1174.66,high:true}
-];
-const $=id=>document.getElementById(id), total=10;
-let selected=[],q=0,current=null,last=null,stream=null,ctx=null,analyser=null,source=null,raf=null,stable=0,cooldown=0;
-
-function buildChoices(){
- $("notes").innerHTML="";
- ALL.forEach((n,i)=>{
-  const d=document.createElement("div");d.className="choice";
-  d.innerHTML=`<input type="checkbox" id="note${i}"><label for="note${i}"><span class="zh">${n.label}</span><span class="oct">${n.high?"高音":"低音"}</span></label>`;
-  $("notes").appendChild(d);
- });
-}
-function getSelected(){return ALL.filter((_,i)=>$("note"+i).checked)}
-function setAll(v){ALL.forEach((_,i)=>$("note"+i).checked=v)}
-function renderTrack(){
- $("track").innerHTML="";
- for(let i=0;i<total;i++){
-  const c=document.createElement("div");c.className="cell"+(i<q?" done":"");c.textContent=i+1;
-  if(i===Math.min(q,total-1)){const b=document.createElement("span");b.className="bear";b.textContent="🐻";c.appendChild(b)}
-  $("track").appendChild(c);
- }
- $("counter").textContent=q>=total?"10 / 10 完成！":`第 ${q+1} / ${total} 題`;
-}
-function choose(){
- let pool=selected.length>1?selected.filter(n=>n.id!==last):selected;
- current=pool[Math.floor(Math.random()*pool.length)];last=current.id;stable=0;
- $("question").textContent=current.label;$("highMark").textContent=current.high?"高音":"";
- $("message").textContent=current.high?`請吹高音「${current.label}」`:`請吹「${current.label}」`;$("message").className="message";
-}
-function cents(f,r){return 1200*Math.log2(f/r)}
-function closest(f){let b=ALL[0];for(const n of ALL)if(Math.abs(cents(f,n.freq))<Math.abs(cents(f,b.freq)))b=n;return b}
-function detect(buf,sr){
- let rms=0;for(const x of buf)rms+=x*x;rms=Math.sqrt(rms/buf.length);if(rms<.006)return{f:-1,rms};
- let min=Math.floor(sr/1450),max=Math.min(Math.floor(sr/430),buf.length-2),bestLag=-1,bestCorr=0;
- for(let lag=min;lag<=max;lag++){let s=0,a2=0,b2=0;for(let i=0;i<buf.length-lag;i++){let a=buf[i],b=buf[i+lag];s+=a*b;a2+=a*a;b2+=b*b}let corr=s/Math.sqrt(a2*b2||1);if(corr>bestCorr){bestCorr=corr;bestLag=lag}}
- return bestLag>0&&bestCorr>.54?{f:sr/bestLag,rms}:{f:-1,rms};
-}
-async function begin(){
- try{
-  stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false}});
-  ctx=new(window.AudioContext||window.webkitAudioContext)();if(ctx.state==="suspended")await ctx.resume();
-  analyser=ctx.createAnalyser();analyser.fftSize=4096;source=ctx.createMediaStreamSource(stream);source.connect(analyser);
-  $("start").textContent="⏹ 停止聽音";loop();
- }catch(e){$("message").textContent="無法啟動麥克風，請檢查瀏覽器的麥克風權限";$("message").className="message bad"}
-}
-function stop(){
- if(raf)cancelAnimationFrame(raf);if(stream)stream.getTracks().forEach(t=>t.stop());if(source)try{source.disconnect()}catch(e){}if(ctx)ctx.close();
- stream=ctx=analyser=source=raf=null;$("start").textContent="🎤 開始聽音";$("bar").style.width="0%";$("heard").textContent="---";
-}
-function success(){
- q++;renderTrack();$("message").textContent="答對！小熊前進一格！";$("message").className="message good";cooldown=performance.now()+900;
- if(q>=total){$("message").textContent="🎉 十題完成！過關！";stop();return}
- setTimeout(choose,650);
-}
-function loop(){
- const data=new Float32Array(analyser.fftSize);analyser.getFloatTimeDomainData(data);const r=detect(data,ctx.sampleRate);
- $("bar").style.width=Math.min(100,r.rms*700)+"%";const now=performance.now();
- if(r.f>0){
-  const n=closest(r.f);$("heard").textContent=(n.high?"高音 ":"")+n.label;
-  const ok=Math.abs(cents(r.f,current.freq))<=55;
-  if(now<cooldown)stable=0;
-  else if(ok){if(!stable)stable=now;if(now-stable>=300){stable=0;success()}else{$("message").textContent="抓到了，再穩一點…";$("message").className="message good"}}
-  else{stable=0;$("message").textContent=`聽到「${n.high?"高音 ":""}${n.label}」，再試一次`;$("message").className="message bad"}
- }else{$("heard").textContent="---";stable=0}
- raf=requestAnimationFrame(loop);
-}
-function startGame(){
- selected=getSelected();
- if(!selected.length){$("setupMsg").textContent="請至少選一個音喔！";$("setupMsg").className="message bad";return}
- q=0;last=null;$("setup").classList.add("hidden");$("play").classList.remove("hidden");$("counter").classList.remove("hidden");renderTrack();choose();
-}
-$("selectAll").addEventListener("click",()=>{setAll(true);$("setupMsg").textContent="已選擇全部 9 個音";$("setupMsg").className="message good"});
-$("clear").addEventListener("click",()=>{setAll(false);$("setupMsg").textContent=""});
-$("go").addEventListener("click",startGame);
-$("start").addEventListener("click",()=>stream?stop():begin());
-$("change").addEventListener("click",()=>{stop();$("play").classList.add("hidden");$("setup").classList.remove("hidden");$("counter").classList.add("hidden")});
-$("reset").addEventListener("click",()=>{q=0;last=null;cooldown=0;renderTrack();choose();$("message").textContent="重新開始！";$("message").className="message"});
-buildChoices();
-})();
-</script>
-</body></html>
+<div class="game soon">
+<div class="icon">🥁</div>
+<h2>節奏挑戰</h2>
+<p>Ta、Ti-Ti 和休止符的節奏反應遊戲。</p>
+<span class="play">即將加入</span>
+</div>
+</section>
+<div class="footer">🎶 Music makes learning fun!</div>
+</main>
+</body>
+</html>
