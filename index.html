@@ -6,446 +6,156 @@
 <title>直笛聲控闖關</title>
 <style>
 *{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:-apple-system,BlinkMacSystemFont,"Noto Sans TC","Segoe UI",sans-serif;
-  background:linear-gradient(#bfeeff 0 67%,#b8e986 67%);
-  color:#402b1d;
-  min-height:100vh;
-}
-.game{max-width:1050px;margin:auto;padding:14px}
-.header{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-.title{
-  font-size:clamp(26px,5vw,44px);
-  font-weight:950;
-  color:#13518c;
-  text-shadow:0 2px #fff;
-}
-.counter{
-  margin-left:auto;
-  background:#fff1ad;
-  border:4px solid white;
-  border-radius:30px;
-  padding:10px 18px;
-  font-size:clamp(18px,3vw,27px);
-  font-weight:900;
-}
-.track{
-  display:grid;
-  grid-template-columns:repeat(10,1fr);
-  gap:6px;
-  margin:28px 0 18px;
-}
-.cell{
-  min-width:0;
-  height:68px;
-  border:4px solid #805326;
-  background:#fff8e9;
-  border-radius:14px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:23px;
-  font-weight:900;
-  position:relative;
-}
-.cell.done{background:#ffe54e}
-.bear{
-  font-size:44px;
-  position:absolute;
-  top:-39px;
-  left:50%;
-  transform:translateX(-50%);
-}
-.panel{
-  background:#fffefa;
-  border:6px solid #55b8ef;
-  border-radius:32px;
-  padding:18px;
-  text-align:center;
-}
-.prompt{
-  display:inline-block;
-  background:#178bdd;
-  color:white;
-  border-radius:30px;
-  padding:9px 30px;
-  font-size:clamp(22px,4vw,34px);
-  font-weight:900;
-}
-.musicnote{
-  font-size:82px;
-  line-height:1;
-  margin:14px 0 4px;
-  color:#23160f;
-}
-.question-wrap{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  min-height:225px;
-}
-.question{
-  width:min(250px,65vw);
-  min-height:210px;
-  border-radius:30px;
-  border:6px solid #f14f78;
-  background:#ffdce4;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:66px;
-  font-weight:950;
-  writing-mode:vertical-rl;
-  text-orientation:upright;
-  letter-spacing:8px;
-}
-.message{
-  min-height:34px;
-  margin-top:8px;
-  font-size:21px;
-  font-weight:900;
-}
-.good{color:#15924d}.bad{color:#c94141}
-.status{
-  margin-top:14px;
-  background:white;
-  border:4px solid #72c9ee;
-  border-radius:24px;
-  padding:12px;
-  display:grid;
-  grid-template-columns:auto 1fr auto auto;
-  gap:12px;
-  align-items:center;
-  font-size:18px;
-  font-weight:850;
-}
-.meter{
-  height:22px;
-  background:#e5e8e8;
-  border-radius:999px;
-  overflow:hidden;
-}
-.bar{
-  height:100%;
-  width:0;
-  background:#20c46b;
-  transition:width .08s linear;
-}
-.heard{
-  min-width:90px;
-  background:#fff8e9;
-  border-radius:12px;
-  padding:8px 12px;
-  text-align:center;
-}
-.controls{
-  display:flex;
-  justify-content:center;
-  gap:10px;
-  flex-wrap:wrap;
-  margin-top:12px;
-}
-button{
-  border:0;
-  border-radius:15px;
-  padding:13px 20px;
-  min-height:48px;
-  font-size:18px;
-  font-weight:900;
-  cursor:pointer;
-}
-.start{background:#187fd0;color:white}
-.reset{background:white;color:#555}
-@media(max-width:650px){
-  .counter{margin-left:0}
-  .track{gap:3px;margin-top:25px}
-  .cell{height:50px;font-size:15px;border-width:3px;border-radius:10px}
-  .bear{font-size:31px;top:-29px}
-  .panel{padding:12px;border-width:4px}
-  .musicnote{font-size:65px}
-  .question-wrap{min-height:185px}
-  .question{width:170px;min-height:175px;font-size:51px;border-width:4px}
-  .status{grid-template-columns:auto 1fr;font-size:16px}
-  .heard{grid-column:2}
-}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Noto Sans TC","Segoe UI",sans-serif;background:linear-gradient(#c9f0ff 0 68%,#c8eca1 68%);color:#3c2b20;min-height:100vh}
+.game{max-width:1050px;margin:auto;padding:14px}.header{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.title{font-size:clamp(27px,5vw,45px);font-weight:950;color:#15568e;text-shadow:0 2px white}
+.counter{margin-left:auto;background:#fff1a8;border:4px solid white;border-radius:28px;padding:9px 17px;font-size:clamp(17px,3vw,26px);font-weight:900}
+.card{background:#fffefa;border:5px solid #64bce9;border-radius:28px;padding:16px;margin-top:13px}
+.setupTitle{text-align:center;font-size:28px;font-weight:950;color:#15568e}.help{text-align:center;color:#66564b;margin:6px 0 15px;font-weight:700}
+.notes{display:grid;grid-template-columns:repeat(9,1fr);gap:8px}.choice{position:relative}.choice input{position:absolute;opacity:0}
+.choice label{min-height:112px;border:4px solid #cec7bd;border-radius:18px;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;font-weight:900;cursor:pointer}
+.choice input:checked+label{background:#fff0a8;border-color:#eea828;transform:translateY(-2px)}
+.zh{font-size:30px;writing-mode:vertical-rl;text-orientation:upright;letter-spacing:2px}.oct{font-size:13px;color:#766b63}
+.buttons,.controls{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:14px}
+button{border:0;border-radius:15px;padding:13px 19px;min-height:48px;font-size:17px;font-weight:900;cursor:pointer}
+.all{background:#fff1a8;color:#72510c}.clear{background:#eee;color:#555}.go,.start{background:#187fd0;color:#fff}.reset{background:#fff;color:#555}
+.track{display:grid;grid-template-columns:repeat(10,1fr);gap:6px;margin:34px 0 16px}
+.cell{height:65px;border:4px solid #805326;background:#fff8e9;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;position:relative}
+.cell.done{background:#ffe54e}.bear{position:absolute;top:-48px;left:50%;transform:translateX(-50%);font-size:52px;filter:drop-shadow(0 2px 1px #fff)}
+.playCard{text-align:center}.prompt{display:inline-block;background:#178bdd;color:white;border-radius:30px;padding:8px 28px;font-size:clamp(21px,4vw,32px);font-weight:900}
+.questionBox{margin:18px auto 8px;width:min(240px,70vw);min-height:220px;border-radius:28px;border:6px solid #f15c80;background:#ffe0e7;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.question{font-size:62px;font-weight:950;writing-mode:vertical-rl;text-orientation:upright;letter-spacing:5px}.highMark{font-size:17px;font-weight:900;color:#c53e62;margin-bottom:7px}
+.message{min-height:34px;font-size:21px;font-weight:900}.good{color:#15924d}.bad{color:#c94141}
+.status{margin-top:14px;background:#fff;border:4px solid #72c9ee;border-radius:22px;padding:12px;display:grid;grid-template-columns:auto 1fr auto auto;gap:12px;align-items:center;font-size:17px;font-weight:850}
+.meter{height:21px;background:#e4e8e8;border-radius:999px;overflow:hidden}.bar{height:100%;width:0;background:#20c46b}.heard{min-width:105px;background:#fff8e9;border-radius:12px;padding:8px;text-align:center}.hidden{display:none!important}
+@media(max-width:700px){.notes{grid-template-columns:repeat(3,1fr)}.choice label{min-height:95px}.counter{margin-left:0}.track{gap:3px}.cell{height:48px;font-size:14px;border-width:3px;border-radius:9px}.bear{font-size:35px;top:-34px}.status{grid-template-columns:auto 1fr}.heard{grid-column:2}.questionBox{min-height:185px}.question{font-size:52px}}
 </style>
 </head>
 <body>
 <div class="game">
-  <div class="header">
-    <div class="title">🎵 直笛聲控闖關</div>
-    <div id="counter" class="counter">第 1 / 10 題</div>
-  </div>
+<div class="header"><div class="title">🎵 直笛聲控闖關</div><div id="counter" class="counter hidden">第 1 / 10 題</div></div>
 
-  <div id="track" class="track"></div>
+<section id="setup" class="card">
+ <div class="setupTitle">這次要挑戰哪些音？</div>
+ <div class="help">全部挑戰，或只選今天要練習的幾個音。</div>
+ <div id="notes" class="notes"></div>
+ <div class="buttons">
+  <button id="selectAll" class="all" type="button">✓ 全部音</button>
+  <button id="clear" class="clear" type="button">清除選擇</button>
+  <button id="go" class="go" type="button">🐻 開始 10 題挑戰</button>
+ </div>
+ <div id="setupMsg" class="message"></div>
+</section>
 
-  <div class="panel">
-    <div class="prompt">請吹出這個音</div>
-    <div class="musicnote">♩</div>
-
-    <div class="question-wrap">
-      <div id="question" class="question">ㄙㄛ</div>
-    </div>
-
-    <div id="message" class="message">按「開始聽音」後吹奏</div>
-  </div>
-
-  <div class="status">
-    <div>🎤 麥克風音量</div>
-    <div class="meter"><div id="bar" class="bar"></div></div>
-    <div>聽到的音：</div>
-    <div id="heard" class="heard">---</div>
-  </div>
-
-  <div class="controls">
-    <button id="start" class="start" type="button">🎤 開始聽音</button>
-    <button id="reset" class="reset" type="button">↺ 重新開始</button>
-  </div>
+<section id="play" class="hidden">
+ <div id="track" class="track"></div>
+ <div class="card playCard">
+  <div class="prompt">請吹出這個音</div>
+  <div class="questionBox"><div id="highMark" class="highMark"></div><div id="question" class="question">ㄙㄛ</div></div>
+  <div id="message" class="message">按「開始聽音」後吹奏</div>
+ </div>
+ <div class="status">
+  <div>🎤 麥克風音量</div><div class="meter"><div id="bar" class="bar"></div></div>
+  <div>聽到的音：</div><div id="heard" class="heard">---</div>
+ </div>
+ <div class="controls">
+  <button id="start" class="start" type="button">🎤 開始聽音</button>
+  <button id="change" class="all" type="button">🎼 重新選音</button>
+  <button id="reset" class="reset" type="button">↺ 重玩這組</button>
+ </div>
+</section>
 </div>
 
 <script>
-(() => {
-  const NOTES = [
-    { label: "ㄙㄛ", freq: 783.99 }, // G5
-    { label: "ㄌㄚ", freq: 880.00 }, // A5
-    { label: "ㄒㄧ", freq: 987.77 }  // B5
-  ];
+(()=>{
+const ALL=[
+{id:"C5",label:"ㄉㄛ",freq:523.25,high:false},
+{id:"D5",label:"ㄖㄨㄝ",freq:587.33,high:false},
+{id:"E5",label:"ㄇㄧ",freq:659.25,high:false},
+{id:"F5",label:"ㄈㄚ",freq:698.46,high:false},
+{id:"G5",label:"ㄙㄛ",freq:783.99,high:false},
+{id:"A5",label:"ㄌㄚ",freq:880.00,high:false},
+{id:"B5",label:"ㄒㄧ",freq:987.77,high:false},
+{id:"C6",label:"ㄉㄛ",freq:1046.50,high:true},
+{id:"D6",label:"ㄖㄨㄝ",freq:1174.66,high:true}
+];
+const $=id=>document.getElementById(id), total=10;
+let selected=[],q=0,current=null,last=null,stream=null,ctx=null,analyser=null,source=null,raf=null,stable=0,cooldown=0;
 
-  const total = 10;
-  let questionIndex = 0;
-  let current = null;
-  let previousLabel = null;
-
-  let stream = null;
-  let audioContext = null;
-  let analyser = null;
-  let source = null;
-  let animationFrame = null;
-  let stableSince = 0;
-  let cooldownUntil = 0;
-
-  const track = document.getElementById("track");
-  const counter = document.getElementById("counter");
-  const question = document.getElementById("question");
-  const message = document.getElementById("message");
-  const bar = document.getElementById("bar");
-  const heard = document.getElementById("heard");
-  const startButton = document.getElementById("start");
-  const resetButton = document.getElementById("reset");
-
-  function renderTrack() {
-    track.innerHTML = "";
-    for (let i = 0; i < total; i++) {
-      const cell = document.createElement("div");
-      cell.className = "cell" + (i < questionIndex ? " done" : "");
-      cell.textContent = i + 1;
-
-      if (i === Math.min(questionIndex, total - 1)) {
-        const bear = document.createElement("span");
-        bear.className = "bear";
-        bear.textContent = "🐻";
-        cell.appendChild(bear);
-      }
-      track.appendChild(cell);
-    }
-    counter.textContent = `第 ${Math.min(questionIndex + 1, total)} / ${total} 題`;
-  }
-
-  function chooseQuestion() {
-    let next;
-    do {
-      next = NOTES[Math.floor(Math.random() * NOTES.length)];
-    } while (NOTES.length > 1 && next.label === previousLabel);
-
-    current = next;
-    previousLabel = next.label;
-    question.textContent = current.label;
-    stableSince = 0;
-    message.textContent = `請吹「${current.label}」`;
-    message.className = "message";
-  }
-
-  function centsDifference(freq, reference) {
-    return 1200 * Math.log2(freq / reference);
-  }
-
-  function closestNote(freq) {
-    let best = NOTES[0];
-    for (const n of NOTES) {
-      if (Math.abs(centsDifference(freq, n.freq)) <
-          Math.abs(centsDifference(freq, best.freq))) {
-        best = n;
-      }
-    }
-    return best;
-  }
-
-  function detectPitch(buffer, sampleRate) {
-    let rms = 0;
-    for (const value of buffer) rms += value * value;
-    rms = Math.sqrt(rms / buffer.length);
-
-    if (rms < 0.006) return { freq: -1, rms };
-
-    const minLag = Math.floor(sampleRate / 1400);
-    const maxLag = Math.min(Math.floor(sampleRate / 500), buffer.length - 2);
-
-    let bestLag = -1;
-    let bestCorrelation = 0;
-
-    for (let lag = minLag; lag <= maxLag; lag++) {
-      let sum = 0, a2 = 0, b2 = 0;
-
-      for (let i = 0; i < buffer.length - lag; i++) {
-        const a = buffer[i];
-        const b = buffer[i + lag];
-        sum += a * b;
-        a2 += a * a;
-        b2 += b * b;
-      }
-
-      const correlation = sum / Math.sqrt((a2 * b2) || 1);
-      if (correlation > bestCorrelation) {
-        bestCorrelation = correlation;
-        bestLag = lag;
-      }
-    }
-
-    if (bestLag <= 0 || bestCorrelation < 0.55) {
-      return { freq: -1, rms };
-    }
-
-    return { freq: sampleRate / bestLag, rms };
-  }
-
-  async function startListening() {
-    try {
-      stream = await navigator.mediaDevices.getUserMedia({
-        audio: {
-          echoCancellation: false,
-          noiseSuppression: false,
-          autoGainControl: false
-        }
-      });
-
-      audioContext = new (window.AudioContext || window.webkitAudioContext)();
-      if (audioContext.state === "suspended") {
-        await audioContext.resume();
-      }
-
-      analyser = audioContext.createAnalyser();
-      analyser.fftSize = 4096;
-
-      source = audioContext.createMediaStreamSource(stream);
-      source.connect(analyser);
-
-      startButton.textContent = "⏹ 停止聽音";
-      message.textContent = `正在聽…請吹「${current.label}」`;
-      listenLoop();
-    } catch (error) {
-      message.textContent = "無法啟動麥克風，請檢查 Safari 的麥克風權限";
-      message.className = "message bad";
-    }
-  }
-
-  function stopListening() {
-    if (animationFrame) cancelAnimationFrame(animationFrame);
-    if (stream) stream.getTracks().forEach(track => track.stop());
-    if (source) {
-      try { source.disconnect(); } catch (e) {}
-    }
-    if (audioContext) audioContext.close();
-
-    stream = null;
-    audioContext = null;
-    analyser = null;
-    source = null;
-    animationFrame = null;
-
-    startButton.textContent = "🎤 開始聽音";
-    bar.style.width = "0%";
-    heard.textContent = "---";
-  }
-
-  function success() {
-    questionIndex++;
-    renderTrack();
-
-    message.textContent = "答對！小熊前進一格！";
-    message.className = "message good";
-    cooldownUntil = performance.now() + 900;
-
-    if (questionIndex >= total) {
-      counter.textContent = "10 / 10 完成！";
-      message.textContent = "🎉 十題完成！過關！";
-      stopListening();
-      return;
-    }
-
-    setTimeout(chooseQuestion, 650);
-  }
-
-  function listenLoop() {
-    const data = new Float32Array(analyser.fftSize);
-    analyser.getFloatTimeDomainData(data);
-
-    const result = detectPitch(data, audioContext.sampleRate);
-    const volume = Math.min(100, result.rms * 700);
-    bar.style.width = volume + "%";
-
-    const now = performance.now();
-
-    if (result.freq > 0) {
-      const note = closestNote(result.freq);
-      heard.textContent = note.label;
-
-      const correct =
-        Math.abs(centsDifference(result.freq, current.freq)) <= 55;
-
-      if (now < cooldownUntil) {
-        stableSince = 0;
-      } else if (correct) {
-        if (!stableSince) stableSince = now;
-
-        if (now - stableSince >= 300) {
-          stableSince = 0;
-          success();
-        } else {
-          message.textContent = "抓到了，再穩一點…";
-          message.className = "message good";
-        }
-      } else {
-        stableSince = 0;
-        message.textContent = `聽到「${note.label}」，再試一次`;
-        message.className = "message bad";
-      }
-    } else {
-      heard.textContent = "---";
-      stableSince = 0;
-    }
-
-    animationFrame = requestAnimationFrame(listenLoop);
-  }
-
-  startButton.addEventListener("click", () => {
-    if (stream) stopListening();
-    else startListening();
-  });
-
-  resetButton.addEventListener("click", () => {
-    questionIndex = 0;
-    previousLabel = null;
-    cooldownUntil = 0;
-    renderTrack();
-    chooseQuestion();
-    message.textContent = "重新開始！";
-    message.className = "message";
-  });
-
-  renderTrack();
-  chooseQuestion();
+function buildChoices(){
+ $("notes").innerHTML="";
+ ALL.forEach((n,i)=>{
+  const d=document.createElement("div");d.className="choice";
+  d.innerHTML=`<input type="checkbox" id="note${i}"><label for="note${i}"><span class="zh">${n.label}</span><span class="oct">${n.high?"高音":"低音"}</span></label>`;
+  $("notes").appendChild(d);
+ });
+}
+function getSelected(){return ALL.filter((_,i)=>$("note"+i).checked)}
+function setAll(v){ALL.forEach((_,i)=>$("note"+i).checked=v)}
+function renderTrack(){
+ $("track").innerHTML="";
+ for(let i=0;i<total;i++){
+  const c=document.createElement("div");c.className="cell"+(i<q?" done":"");c.textContent=i+1;
+  if(i===Math.min(q,total-1)){const b=document.createElement("span");b.className="bear";b.textContent="🐻";c.appendChild(b)}
+  $("track").appendChild(c);
+ }
+ $("counter").textContent=q>=total?"10 / 10 完成！":`第 ${q+1} / ${total} 題`;
+}
+function choose(){
+ let pool=selected.length>1?selected.filter(n=>n.id!==last):selected;
+ current=pool[Math.floor(Math.random()*pool.length)];last=current.id;stable=0;
+ $("question").textContent=current.label;$("highMark").textContent=current.high?"高音":"";
+ $("message").textContent=current.high?`請吹高音「${current.label}」`:`請吹「${current.label}」`;$("message").className="message";
+}
+function cents(f,r){return 1200*Math.log2(f/r)}
+function closest(f){let b=ALL[0];for(const n of ALL)if(Math.abs(cents(f,n.freq))<Math.abs(cents(f,b.freq)))b=n;return b}
+function detect(buf,sr){
+ let rms=0;for(const x of buf)rms+=x*x;rms=Math.sqrt(rms/buf.length);if(rms<.006)return{f:-1,rms};
+ let min=Math.floor(sr/1450),max=Math.min(Math.floor(sr/430),buf.length-2),bestLag=-1,bestCorr=0;
+ for(let lag=min;lag<=max;lag++){let s=0,a2=0,b2=0;for(let i=0;i<buf.length-lag;i++){let a=buf[i],b=buf[i+lag];s+=a*b;a2+=a*a;b2+=b*b}let corr=s/Math.sqrt(a2*b2||1);if(corr>bestCorr){bestCorr=corr;bestLag=lag}}
+ return bestLag>0&&bestCorr>.54?{f:sr/bestLag,rms}:{f:-1,rms};
+}
+async function begin(){
+ try{
+  stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false}});
+  ctx=new(window.AudioContext||window.webkitAudioContext)();if(ctx.state==="suspended")await ctx.resume();
+  analyser=ctx.createAnalyser();analyser.fftSize=4096;source=ctx.createMediaStreamSource(stream);source.connect(analyser);
+  $("start").textContent="⏹ 停止聽音";loop();
+ }catch(e){$("message").textContent="無法啟動麥克風，請檢查瀏覽器的麥克風權限";$("message").className="message bad"}
+}
+function stop(){
+ if(raf)cancelAnimationFrame(raf);if(stream)stream.getTracks().forEach(t=>t.stop());if(source)try{source.disconnect()}catch(e){}if(ctx)ctx.close();
+ stream=ctx=analyser=source=raf=null;$("start").textContent="🎤 開始聽音";$("bar").style.width="0%";$("heard").textContent="---";
+}
+function success(){
+ q++;renderTrack();$("message").textContent="答對！小熊前進一格！";$("message").className="message good";cooldown=performance.now()+900;
+ if(q>=total){$("message").textContent="🎉 十題完成！過關！";stop();return}
+ setTimeout(choose,650);
+}
+function loop(){
+ const data=new Float32Array(analyser.fftSize);analyser.getFloatTimeDomainData(data);const r=detect(data,ctx.sampleRate);
+ $("bar").style.width=Math.min(100,r.rms*700)+"%";const now=performance.now();
+ if(r.f>0){
+  const n=closest(r.f);$("heard").textContent=(n.high?"高音 ":"")+n.label;
+  const ok=Math.abs(cents(r.f,current.freq))<=55;
+  if(now<cooldown)stable=0;
+  else if(ok){if(!stable)stable=now;if(now-stable>=300){stable=0;success()}else{$("message").textContent="抓到了，再穩一點…";$("message").className="message good"}}
+  else{stable=0;$("message").textContent=`聽到「${n.high?"高音 ":""}${n.label}」，再試一次`;$("message").className="message bad"}
+ }else{$("heard").textContent="---";stable=0}
+ raf=requestAnimationFrame(loop);
+}
+function startGame(){
+ selected=getSelected();
+ if(!selected.length){$("setupMsg").textContent="請至少選一個音喔！";$("setupMsg").className="message bad";return}
+ q=0;last=null;$("setup").classList.add("hidden");$("play").classList.remove("hidden");$("counter").classList.remove("hidden");renderTrack();choose();
+}
+$("selectAll").addEventListener("click",()=>{setAll(true);$("setupMsg").textContent="已選擇全部 9 個音";$("setupMsg").className="message good"});
+$("clear").addEventListener("click",()=>{setAll(false);$("setupMsg").textContent=""});
+$("go").addEventListener("click",startGame);
+$("start").addEventListener("click",()=>stream?stop():begin());
+$("change").addEventListener("click",()=>{stop();$("play").classList.add("hidden");$("setup").classList.remove("hidden");$("counter").classList.add("hidden")});
+$("reset").addEventListener("click",()=>{q=0;last=null;cooldown=0;renderTrack();choose();$("message").textContent="重新開始！";$("message").className="message"});
+buildChoices();
 })();
 </script>
-</body>
-</html>
+</body></html>
