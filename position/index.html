@@ -12,10 +12,19 @@ const L=P.filter(x=>x.type==="line"),S=P.filter(x=>x.type==="space");let q=0,sco
 const $=id=>document.getElementById(id),staff=$("staff"),msg=$("msg");
 function buttons(a,id){$(id).innerHTML="";a.forEach(p=>{let b=document.createElement("button");b.className="ans";b.textContent=p.label;b.onclick=()=>answer(p.label);$(id).appendChild(b)})}
 function line(x1,x2,y){let e=document.createElementNS("http://www.w3.org/2000/svg","line");for(const[k,v]of Object.entries({x1,x2,y1:y,y2:y,stroke:"#111","stroke-width":3}))e.setAttribute(k,v);staff.appendChild(e)}
-function draw(p){staff.innerHTML="";const firstY=220,gap=26,x=520;for(let i=0;i<5;i++)line(180,780,firstY-i*gap);let t=document.createElementNS("http://www.w3.org/2000/svg","text");t.setAttribute("x",205);t.setAttribute("y",226);t.setAttribute("font-size",150);t.textContent="𝄞";staff.appendChild(t);let y=firstY-p.step*(gap/2);
-if(p.step<=-2)for(let n=-2;n>=p.step;n-=2)line(x-35,x+35,firstY-n*(gap/2));
-if(p.step>=10)for(let n=10;n<=p.step;n+=2)line(x-35,x+35,firstY-n*(gap/2));
-let h=document.createElementNS("http://www.w3.org/2000/svg","ellipse");h.setAttribute("cx",x);h.setAttribute("cy",y);h.setAttribute("rx",18);h.setAttribute("ry",13);h.setAttribute("fill","#111");h.setAttribute("transform",`rotate(-18 ${x} ${y})`);staff.appendChild(h);let st=document.createElementNS("http://www.w3.org/2000/svg","line");st.setAttribute("x1",x+16);st.setAttribute("x2",x+16);st.setAttribute("y1",y);st.setAttribute("y2",y-65);st.setAttribute("stroke","#111");st.setAttribute("stroke-width",5);staff.appendChild(st)}
+function draw(p){staff.innerHTML="";const firstY=220,gap=26,x=520;
+for(let i=0;i<5;i++)line(180,780,firstY-i*gap);
+let t=document.createElementNS("http://www.w3.org/2000/svg","text");
+t.setAttribute("x",205);t.setAttribute("y",226);t.setAttribute("font-size",150);t.textContent="𝄞";staff.appendChild(t);
+let y=firstY-p.step*(gap/2);
+if(p.step<=-2) line(x-35,x+35,firstY+gap);
+if(p.step>=10) line(x-35,x+35,firstY-5*gap);
+let h=document.createElementNS("http://www.w3.org/2000/svg","ellipse");
+h.setAttribute("cx",x);h.setAttribute("cy",y);h.setAttribute("rx",18);h.setAttribute("ry",13);
+h.setAttribute("fill","#111");h.setAttribute("transform",`rotate(-18 ${x} ${y})`);staff.appendChild(h);
+let st=document.createElementNS("http://www.w3.org/2000/svg","line");
+st.setAttribute("x1",x+16);st.setAttribute("x2",x+16);st.setAttribute("y1",y);st.setAttribute("y2",y-65);
+st.setAttribute("stroke","#111");st.setAttribute("stroke-width",5);staff.appendChild(st)}
 function next(){lock=false;msg.textContent="";q++;$("progress").textContent=`第 ${q} / 10 題`;$("score").textContent=score;let pool=P.filter(x=>x.label!==last);cur=pool[Math.floor(Math.random()*pool.length)];last=cur.label;draw(cur)}
 function answer(v){if(lock)return;lock=true;if(v===cur.label){score+=10;msg.textContent="答對了！🌟";msg.style.color="#16894c"}else{msg.textContent=`答案是：${cur.label}`;msg.style.color="#d34b61"}$("score").textContent=score;setTimeout(()=>q>=10?finish():next(),800)}
 function finish(){$("game").classList.add("hidden");$("result").classList.remove("hidden");$("progress").textContent="完成！";let n=score/10;$("face").textContent=n>=8?"🥳":n>=5?"😊":"💪";$("resultTitle").textContent=n>=8?"太厲害了！":n>=5?"很不錯喔！":"再加油！";$("resultText").textContent=`答對 ${n} / 10 題，得到 ${score} 分！`}
