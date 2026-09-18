@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<title>節奏感應挑戰</title>
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:linear-gradient(180deg,#eaf8ff,#f9fcff);font-family:-apple-system,BlinkMacSystemFont,"Noto Sans TC","Segoe UI",sans-serif;color:#173b6d;touch-action:manipulation}
+.wrap{max-width:900px;margin:auto;padding:22px 16px 48px}
+h1{text-align:center;font-size:clamp(34px,7vw,56px);margin:4px 0}.subtitle{text-align:center;font-weight:800;margin-bottom:20px}
+.card{background:white;border:2px solid #cbe7f8;border-radius:26px;padding:20px;box-shadow:0 7px 20px #8bbbd322;margin-bottom:16px}
+.types{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.type{border:2px solid #cbd9e5;border-radius:18px;background:#f5f9fc;min-height:118px;padding:9px;font-weight:900;color:#173b6d}.type.sel{border-color:#1593e7;background:#e5f5ff}.mini{display:block;width:100%;height:58px;color:#111}.muted{color:#647b91;font-size:14px}
+.row{display:flex;justify-content:center;align-items:center;gap:12px;flex-wrap:wrap}.round{border:0;border-radius:16px;min-width:48px;min-height:46px;background:#e7f3fb;font-size:22px;font-weight:900;color:#173b6d}.primary{border:0;border-radius:999px;min-height:52px;padding:12px 26px;background:#168fe6;color:white;font-size:19px;font-weight:900}.secondary{border:0;border-radius:999px;min-height:46px;padding:10px 20px;background:#e8f2f8;color:#173b6d;font-size:16px;font-weight:900}.big{width:100%;font-size:22px}.hidden{display:none!important}
+.top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-weight:900;font-size:18px}.questionBox{display:flex;align-items:center;justify-content:center;gap:12px;overflow-x:auto}.meter{font-size:28px;font-weight:900;line-height:.8;text-align:center}.notation{width:100%;min-width:430px;max-width:650px;height:135px;color:#111}
+.beats{display:flex;justify-content:center;gap:12px;margin:12px 0}.beat{width:46px;height:46px;border-radius:50%;background:#e8f0f6;display:grid;place-items:center;font-weight:900}.beat.on{background:#168fe6;color:white}.status{text-align:center;min-height:32px;font-size:20px;font-weight:900;margin:10px 0}
+.pad{width:100%;min-height:190px;border:4px solid #168fe6;border-radius:30px;background:#eaf7ff;color:#164276;font-size:30px;font-weight:900;touch-action:none;user-select:none;-webkit-user-select:none}.pad.down{background:#bfe6ff;transform:scale(.992)}.pad:disabled{opacity:.55}
+.feedback{text-align:center;font-size:21px;font-weight:900}.scorebig{text-align:center;font-size:56px;font-weight:1000;margin:12px}.tip{text-align:center;color:#647b91;font-size:14px;margin-top:8px}
+@media(min-width:650px){.types{grid-template-columns:repeat(4,minmax(0,1fr))}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>🥁 節奏感應挑戰</h1>
+<div class="subtitle">看節奏，用手指按出正確的拍點與長度！</div>
+
+<section id="setup">
+<div class="card">
+ <h2>① 選擇節奏型態 <span class="muted">（可複選，至少一個）</span></h2>
+ <div id="types" class="types"></div>
+</div>
+<div class="card">
+ <h2 style="text-align:center">② 設定速度</h2>
+ <div class="row"><button class="round" id="minus">−</button><div style="font-size:30px;font-weight:900">♩ = <span id="bpm">60</span></div><button class="round" id="plus">＋</button><button class="secondary" id="preview">🔊 試聽木魚</button></div>
+ <div class="tip">40～120 BPM，每次調整 5 BPM</div>
+</div>
+<button id="play" class="primary big">▶ 開始遊戲</button>
+</section>
+
+<section id="game" class="hidden">
+<div class="top"><span>第 <span id="qno">1</span> / 5 題</span><span>答對 <span id="correct">0</span> 題</span><span>♩ = <span id="gbpm">60</span></span></div>
+<div class="card" style="margin-top:14px">
+ <div style="text-align:center;font-weight:900;color:#647b91">請看節奏，按出下面的四拍</div>
+ <div class="questionBox"><div class="meter">4<br><br>4</div><svg id="notation" class="notation" viewBox="0 0 650 135"></svg></div>
+</div>
+<div class="beats"><div class="beat">1</div><div class="beat">2</div><div class="beat">3</div><div class="beat">4</div></div>
+<div id="status" class="status">按「準備開始」</div>
+<div class="row"><button id="ready" class="primary">▶ 準備開始（4 拍預備）</button></div>
+<div style="height:10px"></div>
+<button id="pad" class="pad" disabled>🥁 按這裡打出節奏<br><span style="font-size:16px">按下＝發音　｜　放開＝停止</span></button>
+<div id="feedback" class="card feedback hidden" style="margin-top:16px"></div>
+<div class="row"><button id="retry" class="secondary hidden">再試一次</button><button id="next" class="primary hidden">下一題 ▶</button></div>
+</section>
+
+<section id="result" class="hidden">
+<div class="card">
+ <h2 style="text-align:center">完成 5 題！</h2>
+ <div class="scorebig"><span id="finalScore">0</span> / 5</div>
+ <div id="finalMsg" class="feedback"></div>
+</div>
+<div class="row"><button id="again" class="primary">再挑戰 5 題</button><button id="choose" class="secondary">重新選擇節奏型態</button></div>
+</section>
+</div>
+
+<script>
+const NS="http://www.w3.org/2000/svg",$=id=>document.getElementById(id);
+const defs=[
+{id:"ta",name:"ta",b:1},{id:"titi",name:"ti - ti",b:1},{id:"titiri",name:"ti - tiri",b:1},
+{id:"tiriti",name:"tiri - ti",b:1},{id:"tiritiri",name:"tiri - tiri",b:1},{id:"rest",name:"噓",b:1},{id:"taa",name:"ta - a",b:2}
+];
+let selected=new Set(defs.map(d=>d.id)), bpm=60, q=1, correct=0, question=[], expected=[], records=[];
+let running=false,startTime=0,downAt=null,timer=null,audioCtx=null,previewTimer=null;
+const beatEls=[...document.querySelectorAll(".beat")];
+
+function E(tag,a={}){const e=document.createElementNS(NS,tag);Object.entries(a).forEach(([k,v])=>e.setAttribute(k,v));return e}
+function head(s,x,y,open=false){s.appendChild(E("ellipse",{cx:x,cy:y,rx:8,ry:5.5,fill:open?"white":"currentColor",stroke:"currentColor","stroke-width":open?3:0,transform:`rotate(-12 ${x} ${y})`}))}
+function stem(s,x,y){s.appendChild(E("line",{x1:x+7,y1:y,x2:x+7,y2:y-48,stroke:"currentColor","stroke-width":4}))}
+function beam(s,x1,x2,y){s.appendChild(E("rect",{x:x1,y:y,width:x2-x1,height:6,fill:"currentColor"}))}
+function draw(s,id,x,w){
+ const y=92,top=42;
+ if(id==="ta"){head(s,x+w*.5,y);stem(s,x+w*.5,y)}
+ else if(id==="taa"){head(s,x+w*.5,y,true);stem(s,x+w*.5,y)}
+ else if(id==="rest"){s.appendChild(E("path",{d:`M ${x+w*.5} 41 C ${x+w*.5+10} 51 ${x+w*.5-8} 59 ${x+w*.5+3} 68 C ${x+w*.5+11} 76 ${x+w*.5-8} 83 ${x+w*.5-2} 96 C ${x+w*.5-15} 84 ${x+w*.5-3} 74 ${x+w*.5-9} 67 C ${x+w*.5-15} 58 ${x+w*.5+5} 51 ${x+w*.5} 41 Z`,fill:"currentColor"}))}
+ else{
+  let xs=id==="titi"?[.28,.72]:id==="tiritiri"?[.16,.39,.62,.85]:[.22,.5,.78]; xs=xs.map(v=>x+w*v);
+  xs.forEach(xx=>{head(s,xx,y);stem(s,xx,y)});beam(s,xs[0]+7,xs.at(-1)+9,top);
+  if(id==="tiritiri")beam(s,xs[0]+7,xs.at(-1)+9,top+10);
+  if(id==="titiri")beam(s,xs[1]+7,xs[2]+9,top+10);
+  if(id==="tiriti")beam(s,xs[0]+7,xs[1]+9,top+10);
+ }
+}
+function mini(id){const s=E("svg",{viewBox:"0 0 110 105",class:"mini"});draw(s,id,10,90);return s}
+function renderTypes(){
+ $("types").innerHTML="";
+ defs.forEach(d=>{const b=document.createElement("button");b.type="button";b.className="type "+(selected.has(d.id)?"sel":"");
+ const n=document.createElement("div");n.textContent=d.name;b.appendChild(n);b.appendChild(mini(d.id));
+ const sm=document.createElement("div");sm.className="muted";sm.textContent=d.b+" 拍";b.appendChild(sm);
+ b.onclick=()=>{if(selected.has(d.id)&&selected.size===1)return;selected.has(d.id)?selected.delete(d.id):selected.add(d.id);renderTypes()};$("types").appendChild(b)})
+}
+function audio(){if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();if(audioCtx.state==="suspended")audioCtx.resume()}
+function wood(accent=false){
+ audio(); const t=audioCtx.currentTime;
+ // synthetic dry wood-block: two short resonances
+ [[accent?1080:850,.48,.075],[accent?1580:1280,.16,.035]].forEach(([freq,vol,len],i)=>{
+  const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type=i?"triangle":"sine";o.frequency.setValueAtTime(freq,t);if(!i)o.frequency.exponentialRampToValueAtTime(freq*.68,t+len);
+  g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(vol,t+.002);g.gain.exponentialRampToValueAtTime(.0001,t+len);o.connect(g).connect(audioCtx.destination);o.start(t);o.stop(t+len+.01)
+ })
+}
+function preview(){audio();if(previewTimer)clearInterval(previewTimer);let n=0;wood(true);previewTimer=setInterval(()=>{n++;if(n>=4){clearInterval(previewTimer);previewTimer=null;return}wood(false)},60000/bpm)}
+function makeQuestion(){
+ question=[];let left=4,arr=defs.filter(d=>selected.has(d.id));
+ while(left>0){let fit=arr.filter(d=>d.b<=left),d=fit[Math.floor(Math.random()*fit.length)];question.push(d);left-=d.b}
+ expected=[];let p=0;
+ question.forEach(d=>{
+  if(d.id==="ta")expected.push({s:p,e:p+1});
+  if(d.id==="taa")expected.push({s:p,e:p+2});
+  if(d.id==="titi")expected.push({s:p,e:p+.5},{s:p+.5,e:p+1});
+  if(d.id==="titiri")expected.push({s:p,e:p+.5},{s:p+.5,e:p+.75},{s:p+.75,e:p+1});
+  if(d.id==="tiriti")expected.push({s:p,e:p+.25},{s:p+.25,e:p+.5},{s:p+.5,e:p+1});
+  if(d.id==="tiritiri")for(let k=0;k<4;k++)expected.push({s:p+k*.25,e:p+(k+1)*.25});
+  p+=d.b
+ });
+ const s=$("notation");s.innerHTML="";let x=5;question.forEach(d=>{let w=640*d.b/4;draw(s,d.id,x,w);x+=w});
+ $("feedback").classList.add("hidden");$("retry").classList.add("hidden");$("next").classList.add("hidden");$("ready").classList.remove("hidden");$("pad").disabled=true;$("status").textContent='按「準備開始」'
+}
+function light(n){beatEls.forEach((b,i)=>b.classList.toggle("on",i===n))}
+function stop(){if(timer)clearInterval(timer);timer=null;running=false;light(-1);$("pad").disabled=true}
+function begin(){
+ audio();stop();records=[];downAt=null;let prep=0,ms=60000/bpm;
+ $("ready").classList.add("hidden");$("feedback").classList.add("hidden");$("retry").classList.add("hidden");$("next").classList.add("hidden");
+ $("status").textContent="預備：1";light(0);wood(true);
+ timer=setInterval(()=>{
+  prep++;
+  if(prep<4){$("status").textContent="預備："+(prep+1);light(prep);wood(false);return}
+  clearInterval(timer);timer=null;running=true;startTime=performance.now();let n=0;$("pad").disabled=false;$("status").textContent="開始！";light(0);wood(true);
+  timer=setInterval(()=>{n++;if(n>=4){finish();return}light(n);wood(false)},ms)
+ },ms)
+}
+function finish(){
+ if(downAt!==null){records.push({s:(downAt-startTime)/(60000/bpm),e:4});downAt=null;$("pad").classList.remove("down")}
+ stop();
+ let ok=records.length===expected.length;
+ if(ok)for(let i=0;i<expected.length;i++){if(Math.abs(records[i].s-expected[i].s)>.32||Math.abs(records[i].e-expected[i].e)>.36){ok=false;break}}
+ const f=$("feedback");f.classList.remove("hidden");
+ if(ok){f.textContent="🎉 答對了！節奏很準！";correct++;$("correct").textContent=correct;$("next").classList.remove("hidden")}
+ else{f.textContent="再試一次～注意拍點和音的長短";$("retry").classList.remove("hidden")}
+ $("status").textContent="完成"
+}
+function next(){
+ if(q>=5){$("game").classList.add("hidden");$("result").classList.remove("hidden");$("finalScore").textContent=correct;
+ $("finalMsg").textContent=correct>=4?"太棒了！":correct===3?"還不錯，繼續挑戰！":"再練習一次，你會越來越熟！";return}
+ q++;$("qno").textContent=q;makeQuestion()
+}
+function resetFive(){q=1;correct=0;$("qno").textContent=1;$("correct").textContent=0;$("result").classList.add("hidden");$("game").classList.remove("hidden");makeQuestion()}
+$("minus").onclick=()=>{bpm=Math.max(40,bpm-5);$("bpm").textContent=bpm};
+$("plus").onclick=()=>{bpm=Math.min(120,bpm+5);$("bpm").textContent=bpm};
+$("preview").onclick=preview;
+$("play").onclick=()=>{audio();$("setup").classList.add("hidden");$("game").classList.remove("hidden");$("gbpm").textContent=bpm;q=1;correct=0;$("qno").textContent=1;$("correct").textContent=0;makeQuestion()};
+$("ready").onclick=begin;$("retry").onclick=begin;$("next").onclick=next;$("again").onclick=resetFive;
+$("choose").onclick=()=>{stop();$("result").classList.add("hidden");$("game").classList.add("hidden");$("setup").classList.remove("hidden")};
+const pad=$("pad");
+pad.addEventListener("pointerdown",e=>{if(!running||downAt!==null)return;e.preventDefault();downAt=performance.now();pad.classList.add("down");pad.setPointerCapture?.(e.pointerId)});
+function up(e){if(downAt===null)return;e.preventDefault();const now=performance.now(),ms=60000/bpm;records.push({s:(downAt-startTime)/ms,e:(now-startTime)/ms});downAt=null;pad.classList.remove("down")}
+pad.addEventListener("pointerup",up);pad.addEventListener("pointercancel",up);
+renderTypes();
+</script>
+</body></html>
